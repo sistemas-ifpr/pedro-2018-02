@@ -21,7 +21,7 @@ $this->title = 'Pedro locadora';
                 <h2>Sobre nós</h2>
 
                 <p>A mais de 20 anos trabalhando com locação, nos adaptamos as evoluções tecnologicas para entregar
-				a melhor experiência neste tipo de serviço.</p>
+				a melhor experiência neste tipo de serviço</p>
 
                 <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Saiba mais &raquo;</a></p>
             </div>
