@@ -43,8 +43,10 @@ AppAsset::register($this);
             ['label' => 'Contato', 'url' => ['/site/contact']],
 			['label' => 'Artistas', 'url' => ['/artista/index']],
 			['label' => 'Funcionarios', 'url' => ['/funcionario/index']],
-                        ['label' => 'Clientes', 'url' => ['/cliente/index']],
-                        ['label' => 'Empréstimos', 'url' => ['/emprestimo/index']],
+            ['label' => 'Clientes', 'url' => ['/cliente/index']],
+            ['label' => 'Títulos', 'url' => ['/titulo/index']],
+            ['label' => 'Empréstimos', 'url' => ['/emprestimo/index']],
+            ['label' => 'Emp2', 'url' => ['/emprestimo-titulo/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

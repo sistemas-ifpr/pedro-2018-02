@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-
+use yii\helpers\ArrayHelper;
 use Yii;
 
 /**
@@ -50,13 +50,21 @@ class Titulo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'titulo' => 'Titulo',
-            'artista_id' => 'Artista ID',
-            'descricao' => 'Descricao',
-            'ano_lancamento' => 'Ano Lancamento',
-            'quantidade' => 'Quantidade',
-            'quantidade_disponivel' => 'Quantidade Disponivel',
+            'titulo' => 'Título',
+            'artista_id' => 'Artista',
+            'descricao' => 'Descrição',
+            'ano_lancamento' => 'Ano de Lançamento',
+            'quantidade' => 'Quantidade total',
+            'quantidade_disponivel' => 'Quantidade Disponível',
         ];
+    }
+    
+    public static function getAvailableTitulos()
+    {
+        //ORDERBY eU Que mudei_++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        $titulos = self::find()->orderBy('titulo')->asArray()->all();
+        $items = ArrayHelper::map($titulos, 'id', 'titulo');
+        return $items;
     }
 
     /**

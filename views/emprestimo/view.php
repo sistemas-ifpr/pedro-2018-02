@@ -47,6 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_devolucao',
             'valor',
             'situacao',
+            [   
+                'attribute' => 'TITULO ID',
+                'value' => function ($model)
+            {
+                return implode(', ', $model->getTitulos()->select('titulo')->column());
+            }
+            ]
+            //'emprestimoTitulos.titulo'     
         ],
     ]) ?>
     

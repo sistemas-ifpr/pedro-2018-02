@@ -36,8 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'data_emprestimo',
             'data_devolucao',
-            //'valor',
-            //'situacao',
+            'valor',
+            'situacao',
+            
+            [
+                'attribute' => 'titulo',
+                'value' => function($model) 
+                {
+                    return implode(', ', $model->getTitulos()->select('titulo')->column());
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
