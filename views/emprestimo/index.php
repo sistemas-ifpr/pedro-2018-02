@@ -16,8 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Emprestimo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Emprestimo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    
+   
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -37,10 +39,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_emprestimo',
             'data_devolucao',
             'valor',
-            'situacao',
+            [
+                'attribute' => 'situacao',
+                'value' => function($model){
+                         if($model->situacao == '1'){
+                            return 'Emprestado';
+                         } else {
+                             return 'Devolvido';
+                         }
+                       }
+            ],
             
             [
-                'attribute' => 'titulo',
+                'attribute' => 'Titulos',
                 'value' => function($model) 
                 {
                     return implode(', ', $model->getTitulos()->select('titulo')->column());

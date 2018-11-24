@@ -15,9 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="emprestimo-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?=/* Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -25,8 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?=*/ Html::a('Devolver', ['devolver', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Tem certeza que deseja devolver?',
+                'method' => 'post',
+            ],
+        ]) ?>
     </p>
+   
 
+    
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -46,7 +55,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'data_emprestimo',
             'data_devolucao',
             'valor',
-            'situacao',
+                    
+            [
+                'attribute' => 'Situação',
+                'value' => function($model){
+                         if($model->situacao == '1'){
+                            return 'Emprestado';
+                         } else {
+                             return 'Devolvido';
+                         }
+                       }
+            ],
+                    
             [   
                 'attribute' => 'TITULO ID',
                 'value' => function ($model)

@@ -35,7 +35,12 @@ class Emprestimo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['cliente_id', 'funcionario_id', 'data_emprestimo'], 'required'],
+            [
+            'situacao', 'default',
+            'value' => '1',
+            //'on' => 'insert', // instantiate model with this scenario
+            ],
+            [['cliente_id', 'funcionario_id', 'data_emprestimo'], 'required'],
             [['situacao'], 'integer'],
             [['data_emprestimo', 'data_devolucao', 'cliente_id', 'funcionario_id'], 'safe'],
             [['valor'], 'number'],
@@ -88,5 +93,17 @@ class Emprestimo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Titulo::className(), ['id' => 'titulo_id'])
             ->viaTable('emprestimo_titulo', ['emprestimo_id' => 'id']);
+    }
+    
+
+    public function emprestar()
+    {
+        $emprestar = Titulo::findOne(1);
+        $emprestar->quantidade = quantidade - 1;
+    }
+    
+    public function devolver()
+    {
+        Emprestimo::updateAll([$this->id], 'situacao = 2');
     }
 }

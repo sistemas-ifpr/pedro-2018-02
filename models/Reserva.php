@@ -48,10 +48,10 @@ class Reserva extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'cliente_id' => 'Cliente ID',
-            'funcionario_id' => 'Funcionario ID',
-            'data_reserva' => 'Data Reserva',
-            'data_baixa' => 'Data Baixa',
+            'cliente_id' => 'Cliente',
+            'funcionario_id' => 'Funcionario',
+            'data_reserva' => 'Data da Reserva',
+            'data_baixa' => 'Data da Baixa',
         ];
     }
 

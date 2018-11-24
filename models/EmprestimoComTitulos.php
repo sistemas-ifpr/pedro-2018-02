@@ -67,6 +67,11 @@ class EmprestimoComTitulos extends \app\models\Emprestimo
                 $pc->emprestimo_id = $this->id;
                 $pc->titulo_id = $titulo_id;
                 $pc->save();
+                
+                //diminui um titulo do estoque
+                $tit = Titulo::findOne($titulo_id);
+                --$tit->quantidade_disponivel;
+                $tit->save();
             }
         }
         /* Be careful, $this->category_ids can be empty */

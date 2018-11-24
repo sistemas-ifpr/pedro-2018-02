@@ -13,7 +13,7 @@ use app\models\Funcionario;
 /* @var $this yii\web\View */
 /* @var $model app\models\Emprestimo */
 
-$this->title = 'Create Emprestimo';
+$this->title = 'Empréstimo';
 $this->params['breadcrumbs'][] = ['label' => 'Emprestimos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    
-    <h2>Selecione os livros para o empréstimo</h2>
     
     <?php $form = ActiveForm::begin([
         'id' => 'emprestimo-form',
@@ -50,18 +48,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'data_devolucao')->textInput() ?>
 
     <?= $form->field($model, 'valor')->textInput() ?>
-
-    <?= $form->field($model, 'situacao')->textInput() ?>
+    
 
         <?= $form->field($model, 'titulo_ids')
             ->listBox($titulos, ['multiple' => true])
             /* or, you may use a checkbox list instead */
             /* ->checkboxList($categories) */
-            ->hint('Selecione um ou mais livros para empréstimo.');
+            ->hint('Selecione um ou mais titulos para empréstimo.');
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Create', [
+        <?= Html::submitButton('Emprestar', [
             'class' => 'btn btn-primary'
         ]) ?>
 </div>
