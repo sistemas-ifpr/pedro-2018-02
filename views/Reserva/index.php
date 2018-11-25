@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Reserva', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Nova reserva', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -24,15 +24,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
+            
             'id',
-            'cliente_id',
-            'funcionario_id',
+            [   
+                'attribute' => 'cliente_id',
+                'value' => 'cliente.nome'
+            ],
+            [   
+                'attribute' => 'funcionario_id',
+                'value' => 'funcionario.nome'
+            ],
+            [   
+                'attribute' => 'titulo_id',
+                'value' => 'titulo.titulo'
+            ],
             'data_reserva',
             'data_baixa',
-            //'situação',
+            'situacao',
+            
+            
 
             ['class' => 'yii\grid\ActionColumn'],
+            
         ],
     ]); ?>
 </div>

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\FuncionarioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Funcionarios';
+$this->title = 'Funcionários';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="funcionario-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Funcionario', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Funcionário', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([

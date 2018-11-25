@@ -41,10 +41,10 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Sobre', 'url' => ['/site/about']],
             ['label' => 'Contato', 'url' => ['/site/contact']],
-			['label' => 'Artistas', 'url' => ['/artista/index']],
-			['label' => 'Funcionarios', 'url' => ['/funcionario/index']],
-            ['label' => 'Clientes', 'url' => ['/cliente/index']],
+            ['label' => 'Artistas', 'url' => ['/artista/index']],
             ['label' => 'Títulos', 'url' => ['/titulo/index']],
+            ['label' => 'Clientes', 'url' => ['/cliente/index']],
+            ['label' => 'Funcionários', 'url' => ['/funcionario/index']],
             ['label' => 'Empréstimos', 'url' => ['/emprestimo/index']],
             ['label' => 'Reservas', 'url' => ['/reserva/index']],
             Yii::$app->user->isGuest ? (

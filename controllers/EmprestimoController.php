@@ -5,12 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Emprestimo;
 use app\models\EmprestimoComTitulos;
+use app\models\EmprestimoTitulo;
 use app\models\EmprestimoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use app\models\Titulo;
+use app\controllers\Alert;
 
 /**
  * EmprestimoController implements the CRUD actions for Emprestimo model.
@@ -78,11 +80,29 @@ class EmprestimoController extends Controller
         $model = new EmprestimoComTitulos();
     
         if ($model->load(Yii::$app->request->post())) {
+            
+            
             if ($model->save()) {
                 $model->saveTitulos();
-                return $this->redirect(['index']);
+                if ($model->possuiBonus()){
+                    $model->valor = 0.0;
+                    $model->save();
+                    $model->diminuirBonus();
+                    
+                    Yii::$app->session->setFlash('msg', '
+                        <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <strong>BONUS! </strong>Cliente completou 10 empréstimos, este é por conta da casa.</div>'
+                     );
+               
+                    return $this->redirect(['view', 'id' => $model->id]);
+                    
+                } else {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
         }
+        
 
         return $this->render('create', [
             'model' => $model,
@@ -152,9 +172,13 @@ class EmprestimoController extends Controller
     
     public function actionDevolver($id)
     {
+        
         $model = $this->findModel($id);
         $model->situacao = '2';
         $model->save();
+        $model->devolver();
+        $model->addBonus();
+        
         return $this->redirect(['index']);
    
     }

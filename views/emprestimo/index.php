@@ -7,16 +7,21 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\EmprestimoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Emprestimos';
+$this->title = 'Empréstimos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
+
 <div class="emprestimo-index">
+    
+    <?= Yii::$app->session->getFlash('msg') ?>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Novo Emprestimo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Empréstimo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     
    

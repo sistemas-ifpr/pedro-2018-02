@@ -98,12 +98,46 @@ class Emprestimo extends \yii\db\ActiveRecord
 
     public function emprestar()
     {
-        $emprestar = Titulo::findOne(1);
-        $emprestar->quantidade = quantidade - 1;
+        //$emprestar = Titulo::findOne(1);
+        //$emprestar->quantidade = quantidade - 1;
     }
     
     public function devolver()
     {
-        Emprestimo::updateAll([$this->id], 'situacao = 2');
+        
+        $et = EmprestimoTitulo::find()->where(['emprestimo_id' => $this->id])->all();
+        
+            foreach($et as $titulo_id) {
+            
+                $tit = Titulo::findOne($titulo_id);
+                ++$tit->quantidade_disponivel;
+                $tit->save();
+            }  
     }
+    
+    
+    public function addBonus()
+    {
+        $cliente = Cliente::findOne($this->cliente_id);
+        ++$cliente->bonus;
+        $cliente->save();
+    }
+    
+    public function diminuirBonus()
+    {
+        $cliente = Cliente::findOne($this->cliente_id);
+        $cliente->bonus = $cliente->bonus -10;
+        $cliente->save();
+    }
+    
+    public function possuiBonus(){
+        $cliente = Cliente::findOne($this->cliente_id);
+        if ($cliente->bonus == 10){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
+    

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TituloSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Titulos';
+$this->title = 'Títulos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="titulo-index">
@@ -16,12 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Titulo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Novo Título', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

@@ -8,6 +8,7 @@ use app\models\ReservaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Titulo;
 
 /**
  * ReservaController implements the CRUD actions for Reserva model.
@@ -67,7 +68,11 @@ class ReservaController extends Controller
         $model = new Reserva();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $tit = Titulo::findOne($model->titulo_id);
+            --$tit->quantidade_disponivel;
+            $tit->save();
             return $this->redirect(['view', 'id' => $model->id]);
+            
         }
 
         return $this->render('create', [
@@ -123,5 +128,19 @@ class ReservaController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+    
+    public function actionCancelar($id)
+    {
+        $model = Reserva::findOne($id);
+        $model->situacao = 'encerrada';
+        $model->save();
+        
+        $tit = Titulo::findOne($model->titulo_id);
+        ++$tit->quantidade_disponivel;
+        $tit->save();
+        
+        return $this->redirect(['index']);
+        
     }
 }

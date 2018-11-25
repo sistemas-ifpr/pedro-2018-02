@@ -51,9 +51,9 @@ class Funcionario extends \yii\db\ActiveRecord
             'cpf' => 'Cpf',
             'telefone' => 'Telefone',
             'celular' => 'Celular',
-            'endereco' => 'Endereco',
-            'data_admissao' => 'Data Admissao',
-            'data_demissao' => 'Data Demissao',
+            'endereco' => 'Endereço',
+            'data_admissao' => 'Data de Admissão',
+            'data_demissao' => 'Data de Demissão',
         ];
     }
 }

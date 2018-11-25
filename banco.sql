@@ -64,12 +64,13 @@ CREATE TABLE IF NOT EXISTS `emprestimo` (
   KEY `funcionario_id` (`funcionario_id`),
   CONSTRAINT `emprestimo_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
   CONSTRAINT `emprestimo_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela locadora.emprestimo: ~10 rows (aproximadamente)
+-- Copiando dados para a tabela locadora.emprestimo: ~14 rows (aproximadamente)
 /*!40000 ALTER TABLE `emprestimo` DISABLE KEYS */;
 INSERT INTO `emprestimo` (`id`, `cliente_id`, `funcionario_id`, `data_emprestimo`, `data_devolucao`, `valor`, `situacao`) VALUES
-	(20, 1, 1, '2019-02-20', '2010-02-11 00:00:00', 10, 1);
+	(59, 1, 1, '2019-02-20', '2010-02-11 00:00:00', 10, 2),
+	(60, 1, 1, '2019-02-20', '2010-02-11 00:00:00', 0, 1);
 /*!40000 ALTER TABLE `emprestimo` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela locadora.emprestimo_titulo
@@ -82,13 +83,16 @@ CREATE TABLE IF NOT EXISTS `emprestimo_titulo` (
   KEY `titulo_id` (`titulo_id`),
   CONSTRAINT `emprestimo_titulo_ibfk_1` FOREIGN KEY (`emprestimo_id`) REFERENCES `emprestimo` (`id`),
   CONSTRAINT `emprestimo_titulo_ibfk_2` FOREIGN KEY (`titulo_id`) REFERENCES `titulo` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela locadora.emprestimo_titulo: ~12 rows (aproximadamente)
+-- Copiando dados para a tabela locadora.emprestimo_titulo: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `emprestimo_titulo` DISABLE KEYS */;
 INSERT INTO `emprestimo_titulo` (`id`, `emprestimo_id`, `titulo_id`) VALUES
-	(26, 20, 1),
-	(27, 20, 2);
+	(64, 59, 1),
+	(65, 59, 2),
+	(66, 59, 3),
+	(67, 60, 1),
+	(68, 60, 2);
 /*!40000 ALTER TABLE `emprestimo_titulo` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela locadora.funcionario
@@ -116,37 +120,26 @@ CREATE TABLE IF NOT EXISTS `reserva` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cliente_id` int(11) NOT NULL,
   `funcionario_id` int(11) NOT NULL,
+  `titulo_id` int(11) NOT NULL,
   `data_reserva` date NOT NULL,
   `data_baixa` date DEFAULT NULL,
-  `situação` enum('ativa','encerrada') DEFAULT NULL,
+  `situacao` enum('ativa','encerrada') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cliente_id` (`cliente_id`),
   KEY `funcionario_id` (`funcionario_id`),
-  CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
-  CONSTRAINT `reserva_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- Copiando dados para a tabela locadora.reserva: ~1 rows (aproximadamente)
-/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
-INSERT INTO `reserva` (`id`, `cliente_id`, `funcionario_id`, `data_reserva`, `data_baixa`, `situação`) VALUES
-	(1, 1, 1, '2018-11-23', '2018-11-23', 'ativa');
-/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
-
--- Copiando estrutura para tabela locadora.reserva_titulo
-CREATE TABLE IF NOT EXISTS `reserva_titulo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reserva_id` int(11) NOT NULL,
-  `titulo_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `reserva_id` (`reserva_id`),
   KEY `titulo_id` (`titulo_id`),
-  CONSTRAINT `reserva_titulo_ibfk_1` FOREIGN KEY (`reserva_id`) REFERENCES `reserva` (`id`),
-  CONSTRAINT `reserva_titulo_ibfk_2` FOREIGN KEY (`titulo_id`) REFERENCES `titulo` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `reserva_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
+  CONSTRAINT `reserva_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`),
+  CONSTRAINT `reserva_ibfk_3` FOREIGN KEY (`titulo_id`) REFERENCES `titulo` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela locadora.reserva_titulo: ~0 rows (aproximadamente)
-/*!40000 ALTER TABLE `reserva_titulo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reserva_titulo` ENABLE KEYS */;
+-- Copiando dados para a tabela locadora.reserva: ~2 rows (aproximadamente)
+/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
+INSERT INTO `reserva` (`id`, `cliente_id`, `funcionario_id`, `titulo_id`, `data_reserva`, `data_baixa`, `situacao`) VALUES
+	(3, 2, 1, 1, '2018-01-01', '2018-01-01', 'encerrada'),
+	(7, 1, 1, 3, '2018-01-01', '2018-01-01', 'encerrada'),
+	(8, 1, 1, 1, '2018-01-01', '2018-01-01', 'encerrada');
+/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela locadora.titulo
 CREATE TABLE IF NOT EXISTS `titulo` (
@@ -160,34 +153,29 @@ CREATE TABLE IF NOT EXISTS `titulo` (
   PRIMARY KEY (`id`),
   KEY `artista_id` (`artista_id`),
   CONSTRAINT `titulo_ibfk_1` FOREIGN KEY (`artista_id`) REFERENCES `artista` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela locadora.titulo: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela locadora.titulo: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `titulo` DISABLE KEYS */;
 INSERT INTO `titulo` (`id`, `titulo`, `artista_id`, `descricao`, `ano_lancamento`, `quantidade`, `quantidade_disponivel`) VALUES
 	(1, 'Titulo 1', 1, 'Descrição do titulo 1', '2018-11-20', 10, 9),
-	(2, 'Título 2', 2, 'Descrição do título 2', '2018-09-21', 10, 9);
+	(2, 'Título 2', 2, 'Descrição do título 2', '2018-09-21', 10, 9),
+	(3, 'Titulo 3', 1, 'Descrição do título 2', '2018-09-21', 10, 10);
 /*!40000 ALTER TABLE `titulo` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela locadora.usuario
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `nivel` int(11) NOT NULL,
-  `cliente_id` int(11) DEFAULT NULL,
-  `funcionario_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cliente_id` (`cliente_id`),
-  KEY `funcionario_id` (`funcionario_id`),
-  CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`id`),
-  CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`funcionario_id`) REFERENCES `funcionario` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `email` varchar(50) NOT NULL,
+  `password` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Copiando dados para a tabela locadora.usuario: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` (`id`, `username`, `password`, `nivel`, `cliente_id`, `funcionario_id`) VALUES
-	(1, 'pedro', '12', 2, 2, NULL);
+INSERT INTO `usuario` (`id`, `username`, `email`, `password`) VALUES
+	(1, 'pedro', 'pedro@email.com', 123);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Reserva;
+use app\models\Usuario;
 
 /**
- * ReservaSearch represents the model behind the search form of `app\models\Reserva`.
+ * UsuarioSearch represents the model behind the search form of `app\models\Usuario`.
  */
-class ReservaSearch extends Reserva
+class UsuarioSearch extends Usuario
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class ReservaSearch extends Reserva
     public function rules()
     {
         return [
-            [['id', 'cliente_id', 'funcionario_id', 'titulo_id'], 'integer'],
-            [['data_reserva', 'data_baixa', 'situacao'], 'safe'],
+            [['id', 'senha'], 'integer'],
+            [['nome', 'email'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class ReservaSearch extends Reserva
      */
     public function search($params)
     {
-        $query = Reserva::find();
+        $query = Usuario::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +60,11 @@ class ReservaSearch extends Reserva
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'cliente_id' => $this->cliente_id,
-            'funcionario_id' => $this->funcionario_id,
-            'titulo_id' => $this->titulo_id,
-            'data_reserva' => $this->data_reserva,
-            'data_baixa' => $this->data_baixa,
+            'senha' => $this->senha,
         ]);
 
-        $query->andFilterWhere(['like', 'situacao', $this->situacao]);
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+            ->andFilterWhere(['like', 'email', $this->email]);
 
         return $dataProvider;
     }

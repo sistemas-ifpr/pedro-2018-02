@@ -10,12 +10,14 @@ use Yii;
  * @property int $id
  * @property int $cliente_id
  * @property int $funcionario_id
+ * @property int $titulo_id
  * @property string $data_reserva
  * @property string $data_baixa
+ * @property string $situacao
  *
  * @property Cliente $cliente
  * @property Funcionario $funcionario
- * @property ReservaTitulo[] $reservaTitulos
+ * @property Titulo $titulo
  */
 class Reserva extends \yii\db\ActiveRecord
 {
@@ -33,11 +35,18 @@ class Reserva extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cliente_id', 'funcionario_id', 'data_reserva'], 'required'],
-            [['cliente_id', 'funcionario_id'], 'integer'],
+            [
+            'situacao', 'default',
+            'value' => '1',
+            //'on' => 'insert', // instantiate model with this scenario
+            ],
+            [['cliente_id', 'funcionario_id', 'titulo_id', 'data_reserva'], 'required'],
+            [['cliente_id', 'funcionario_id', 'titulo_id'], 'integer'],
             [['data_reserva', 'data_baixa'], 'safe'],
+            [['situacao'], 'string'],
             [['cliente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cliente::className(), 'targetAttribute' => ['cliente_id' => 'id']],
             [['funcionario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Funcionario::className(), 'targetAttribute' => ['funcionario_id' => 'id']],
+            [['titulo_id'], 'exist', 'skipOnError' => true, 'targetClass' => Titulo::className(), 'targetAttribute' => ['titulo_id' => 'id']],
         ];
     }
 
@@ -49,9 +58,11 @@ class Reserva extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'cliente_id' => 'Cliente',
-            'funcionario_id' => 'Funcionario',
-            'data_reserva' => 'Data da Reserva',
-            'data_baixa' => 'Data da Baixa',
+            'funcionario_id' => 'Funcionário',
+            'titulo_id' => 'Título',
+            'data_reserva' => 'Data da reserva',
+            'data_baixa' => 'Data da baixa',
+            'situacao' => 'Situação',
         ];
     }
 
@@ -74,8 +85,10 @@ class Reserva extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getReservaTitulos()
+    public function getTitulo()
     {
-        return $this->hasMany(ReservaTitulo::className(), ['reserva_id' => 'id']);
+        return $this->hasOne(Titulo::className(), ['id' => 'titulo_id']);
     }
+    
+   
 }

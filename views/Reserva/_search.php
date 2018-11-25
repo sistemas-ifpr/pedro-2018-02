@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'funcionario_id') ?>
 
+    <?= $form->field($model, 'titulo_id') ?>
+
     <?= $form->field($model, 'data_reserva') ?>
 
-    <?= $form->field($model, 'data_baixa') ?>
+    <?php // echo $form->field($model, 'data_baixa') ?>
 
     <?php // echo $form->field($model, 'situação') ?>
 

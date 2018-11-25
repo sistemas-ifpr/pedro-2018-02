@@ -49,6 +49,7 @@ class EmprestimoComTitulos extends \app\models\Emprestimo
                 ->asArray()
                 ->all();
             foreach($rows as $row) {
+               //verifica se titulo está disponivel  
                $this->titulo_ids[] = $row['titulo_id'];
             }
         }
@@ -66,15 +67,39 @@ class EmprestimoComTitulos extends \app\models\Emprestimo
                 $pc = new EmprestimoTitulo();
                 $pc->emprestimo_id = $this->id;
                 $pc->titulo_id = $titulo_id;
-                $pc->save();
-                
                 //diminui um titulo do estoque
                 $tit = Titulo::findOne($titulo_id);
                 --$tit->quantidade_disponivel;
+                
+                if($tit->quantidade_disponivel >= 0){
+                    $pc->save();
+                    $tit->save();
+                } else {
+                    return false;
+                }    
+            }
+        /* Be careful, $this->category_ids can be empty */
+        }
+    }
+    
+    /*public function devolverTitulos()
+    {
+        
+        //\app\models\EmprestimoTitulo::deleteAll(['emprestimo_id' => $this->id]);
+                
+        if (is_array($this->titulo_ids)) {
+
+            foreach($this->titulo_ids as $titulo_id) {
+     
+                //aumenta um titulo no estoque
+                $tit = Titulo::findOne($titulo_id);
+                ++$tit->quantidade_disponivel;
                 $tit->save();
             }
         }
+        
+        //return $this->redirect(['index']);
         /* Be careful, $this->category_ids can be empty */
-    }
+    
     
 }
